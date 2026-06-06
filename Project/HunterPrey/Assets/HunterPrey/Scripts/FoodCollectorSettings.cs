@@ -26,7 +26,7 @@ public class FoodCollectorSettings : MonoBehaviour
         ClearObjects(GameObject.FindGameObjectsWithTag("badFood"));
 
         agents = GameObject.FindGameObjectsWithTag("agent");
-        listArea = FindObjectsByType<FoodCollectorArea>(FindObjectsSortMode.InstanceID);
+        listArea = FindObjectsByType<FoodCollectorArea>();
         foreach (var fa in listArea)
         {
             fa.ResetFoodArea(agents);
