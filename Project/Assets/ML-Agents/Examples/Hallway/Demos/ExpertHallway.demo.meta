@@ -1,13 +1,3 @@
-fileFormatVersion: 2
-guid: 41c6af18564fe425fa1c047d603ee34e
-ScriptedImporter:
-  internalIDToNameTable:
-  - first:
-      114: 11400000
-    second: Assets/ML-Agents/Examples/Hallway/Demos/ExpertHallway.demo
-  externalObjects: {}
-  serializedVersion: 2
-  userData: ' (Unity.MLAgents.Demonstrations.DemonstrationSummary)'
-  assetBundleName: 
-  assetBundleVariant: 
-  script: {fileID: 11500000, guid: 7bd65ce151aaa4a41a45312543c56be1, type: 3}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3884e45fa41091c9792c0fd402fcfeb8c1f04f7873ead6acf17518531d5ae204
+size 439

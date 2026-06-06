@@ -1,10 +1,3 @@
-fileFormatVersion: 2
-guid: 268593be8b3ba416d899dc4114ddb326
-ScriptedImporter:
-  internalIDToNameTable: []
-  externalObjects: {}
-  serializedVersion: 2
-  userData: ' (Unity.MLAgents.Demonstrations.DemonstrationSummary)'
-  assetBundleName: 
-  assetBundleVariant: 
-  script: {fileID: 11500000, guid: 7bd65ce151aaa4a41a45312543c56be1, type: 3}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f80c93eaac94f36bd592dc00fc448a3072d42062de59bfe1ac816ebabb1ae1fb
+size 340

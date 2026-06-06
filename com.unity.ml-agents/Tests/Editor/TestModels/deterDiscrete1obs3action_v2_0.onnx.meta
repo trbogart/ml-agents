@@ -1,13 +1,3 @@
-fileFormatVersion: 2
-guid: d132cc9c934a54fdc99758427373e038
-ScriptedImporter:
-  internalIDToNameTable: []
-  externalObjects: {}
-  serializedVersion: 2
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-  script: {fileID: 11500000, guid: f22407ba6b4157b4a93d0a670bd3dd57, type: 3}
-  dynamicDimConfigs:
-  - name: batch
-    size: -1
+version https://git-lfs.github.com/spec/v1
+oid sha256:c55564a0e4556f6d698ea0f89876f9463d6a78ea19958a24858a99b46ceab9f1
+size 335
