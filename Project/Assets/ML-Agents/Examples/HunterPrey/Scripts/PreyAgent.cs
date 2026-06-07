@@ -70,11 +70,12 @@ public class PreyAgent : Agent
 
     public void MoveAgent(ActionBuffers actionBuffers)
     {
+        // TODO configurable frozen, poison, and satiate times
         if (Time.time > m_FrozenTime + 4f && m_Frozen)
         {
             Unfreeze();
         }
-        if (Time.time > m_EffectTime + 0.5f)
+        if (Time.time > m_EffectTime + 1f)
         {
             if (m_Poisoned)
             {
@@ -101,6 +102,12 @@ public class PreyAgent : Agent
             dirToGo += transform.right * right;
             rotateDir = -transform.up * rotate;
 
+            if (m_Poisoned || m_Satiated)
+            {
+                // temporarily slower if poisoned or satiated
+                // TODO configurable
+                dirToGo *= 0.5f;
+            }
             m_AgentRb.AddForce(dirToGo * moveSpeed, ForceMode.VelocityChange);
             transform.Rotate(rotateDir, Time.fixedDeltaTime * turnSpeed);
         }
@@ -109,10 +116,16 @@ public class PreyAgent : Agent
         {
             m_AgentRb.linearVelocity *= 0.95f;
         }
-
     }
 
-    void Freeze()
+    
+    public void OnEaten()
+    {
+        AddReward(-2f); // TODO configurable   
+        OnSpawn();
+    }
+
+    public void Freeze()
     {
         gameObject.tag = "frozenPrey";
         m_Frozen = true;
@@ -182,7 +195,7 @@ public class PreyAgent : Agent
         discreteActionsOut[0] = Input.GetKey(KeyCode.Space) ? 1 : 0;
     }
 
-    public override void OnEpisodeBegin()
+    private void OnSpawn()
     {
         Unfreeze();
         Unpoison();
@@ -192,7 +205,11 @@ public class PreyAgent : Agent
             2f, Random.Range(-m_MyArea.range, m_MyArea.range))
             + area.transform.position;
         transform.rotation = Quaternion.Euler(new Vector3(0f, Random.Range(0, 360)));
+    }
 
+    public override void OnEpisodeBegin()
+    {
+        OnSpawn();
         SetResetParameters();
     }
 
