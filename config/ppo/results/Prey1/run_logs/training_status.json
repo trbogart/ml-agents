@@ -1,0 +1,47 @@
+{
+    "GridPrey": {
+        "checkpoints": [
+            {
+                "steps": 499984,
+                "file_path": "results\\Prey1\\GridPrey\\GridPrey-499984.onnx",
+                "reward": 43.9999954768767,
+                "creation_time": 1780847708.9940171,
+                "auxillary_file_paths": [
+                    "results\\Prey1\\GridPrey\\GridPrey-499984.pt"
+                ]
+            },
+            {
+                "steps": 999968,
+                "file_path": "results\\Prey1\\GridPrey\\GridPrey-999968.onnx",
+                "reward": null,
+                "creation_time": 1780849640.8100314,
+                "auxillary_file_paths": [
+                    "results\\Prey1\\GridPrey\\GridPrey-999968.pt"
+                ]
+            },
+            {
+                "steps": 1122384,
+                "file_path": "results\\Prey1\\GridPrey\\GridPrey-1122384.onnx",
+                "reward": 48.24999573267996,
+                "creation_time": 1780850121.0295784,
+                "auxillary_file_paths": [
+                    "results\\Prey1\\GridPrey\\GridPrey-1122384.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1122384,
+            "file_path": "results\\Prey1\\GridPrey.onnx",
+            "reward": 48.24999573267996,
+            "creation_time": 1780850121.0295784,
+            "auxillary_file_paths": [
+                "results\\Prey1\\GridPrey\\GridPrey-1122384.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

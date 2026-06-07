@@ -12,8 +12,8 @@ public class HunterAgent : Agent
     public GameObject area;
     HunterPreyArea m_MyArea;
     bool m_Shoot;
-    bool m_Satiated;
-    float m_SatiatedTime;
+    bool m_Capturing;
+    float m_CaptureTime;
     Rigidbody m_AgentRb;
     float m_LaserLength;
     // Speed of agent rotation.
@@ -31,7 +31,7 @@ public class HunterAgent : Agent
     public float existentialPenalty = 0;
     public float indivFoodReward = 1;
     public float groupFoodReward = 1;
-    public float satiatedDuration = 0.5f;
+    public float captureDuration = 0.5f;
 
     EnvironmentParameters m_ResetParams;
 
@@ -67,9 +67,9 @@ public class HunterAgent : Agent
     {
         m_Shoot = false;
 
-        if (m_Satiated && Time.time > m_SatiatedTime + satiatedDuration)
+        if (m_Capturing && Time.time > m_CaptureTime + captureDuration)
         {
-            Unsatiate();
+            FinishCapturing();
         }
 
         var dirToGo = Vector3.zero;
@@ -86,7 +86,7 @@ public class HunterAgent : Agent
         dirToGo += transform.right * right;
         rotateDir = -transform.up * rotate;
 
-        if (discreteActions[0] > 0 && !m_Satiated)
+        if (discreteActions[0] > 0 && !m_Capturing)
         {
             // ignore weapon for prey 
             m_Shoot = true;
@@ -100,7 +100,7 @@ public class HunterAgent : Agent
         {
             m_AgentRb.linearVelocity *= 0.95f;
         }
-        
+
         if (m_Shoot)
         {
             var myTransform = transform;
@@ -119,7 +119,7 @@ public class HunterAgent : Agent
         }
     }
 
-    void Satiate()
+    void Capture()
     {
         AddReward(indivFoodReward);
         m_MyArea.OnPreyCaptured(groupFoodReward);
@@ -128,14 +128,14 @@ public class HunterAgent : Agent
             m_HunterPreySettings.totalScore += 1;
         }
 
-        m_Satiated = true;
-        m_SatiatedTime = Time.time;
+        m_Capturing = true;
+        m_CaptureTime = Time.time;
         gameObject.GetComponentInChildren<Renderer>().material = goodMaterial;
     }
 
-    void Unsatiate()
+    void FinishCapturing()
     {
-        m_Satiated = false;
+        m_Capturing = false;
         gameObject.GetComponentInChildren<Renderer>().material = normalMaterial;
     }
 
@@ -187,7 +187,7 @@ public class HunterAgent : Agent
         var prey = collision.gameObject.GetComponent<PreyAgent>();
         if (prey != null)
         {
-            Satiate();
+            Capture();
         }
     }
 

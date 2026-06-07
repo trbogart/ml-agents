@@ -95,7 +95,7 @@ public class PreyAgent : Agent
 
         var continuousActions = actionBuffers.ContinuousActions;
 
-        if (!m_Frozen && !m_Poisoned && !m_Satiated)
+        if (!IsImmobile())
         {
             var forward = Mathf.Clamp(continuousActions[0], -1f, 1f);
             var right = Mathf.Clamp(continuousActions[1], -1f, 1f);
@@ -113,6 +113,11 @@ public class PreyAgent : Agent
         {
             m_AgentRb.linearVelocity *= 0.95f;
         }
+    }
+
+    bool IsImmobile()
+    {
+        return m_Frozen || m_Poisoned || m_Satiated;
     }
 
     
