@@ -76,7 +76,7 @@ public class HunterAgent : Agent
         dirToGo += transform.right * right;
         rotateDir = -transform.up * rotate;
 
-        if (discreteActions[0] > 0 && gameObject.tag == "hunter")
+        if (discreteActions[0] > 0)
         {
             // ignore weapon for prey 
             m_Shoot = true;

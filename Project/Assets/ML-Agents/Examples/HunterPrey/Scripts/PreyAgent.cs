@@ -15,7 +15,7 @@ public class PreyAgent : Agent
     bool m_Poisoned;
     bool m_Satiated;
     float m_FrozenTime;
-    float m_EffectTime;
+    float m_EffectTime; // poisoned or satiated
     Rigidbody m_AgentRb;
     // Speed of agent rotation.
     public float turnSpeed = 300;
@@ -32,7 +32,13 @@ public class PreyAgent : Agent
              "is checked, this option has no effect. This option is necessary for the " +
              "VisualHunterPrey scene.")]
     public bool useVectorFrozenFlag;
+    public float foodReward = 1;
+    public float poisonPenalty = -1;
+    public float frozenPenalty = -1;
+    public float eatenPenalty = -2;
     public float existentialPenalty = -0.0001f;
+    public float frozenDuration = 10;
+    public float effectDuration = 1;
 
     EnvironmentParameters m_ResetParams;
 
@@ -70,12 +76,11 @@ public class PreyAgent : Agent
 
     public void MoveAgent(ActionBuffers actionBuffers)
     {
-        // TODO configurable frozen, poison, and satiate times
-        if (Time.time > m_FrozenTime + 4f && m_Frozen)
+        if (Time.time > m_FrozenTime + frozenDuration && m_Frozen)
         {
             Unfreeze();
         }
-        if (Time.time > m_EffectTime + 1f)
+        if (Time.time > m_EffectTime + effectDuration)
         {
             if (m_Poisoned)
             {
@@ -92,7 +97,7 @@ public class PreyAgent : Agent
 
         var continuousActions = actionBuffers.ContinuousActions;
 
-        if (!m_Frozen)
+        if (!m_Frozen && !m_Poisoned && !m_Satiated)
         {
             var forward = Mathf.Clamp(continuousActions[0], -1f, 1f);
             var right = Mathf.Clamp(continuousActions[1], -1f, 1f);
@@ -102,12 +107,6 @@ public class PreyAgent : Agent
             dirToGo += transform.right * right;
             rotateDir = -transform.up * rotate;
 
-            if (m_Poisoned || m_Satiated)
-            {
-                // temporarily slower if poisoned or satiated
-                // TODO configurable
-                dirToGo *= 0.5f;
-            }
             m_AgentRb.AddForce(dirToGo * moveSpeed, ForceMode.VelocityChange);
             transform.Rotate(rotateDir, Time.fixedDeltaTime * turnSpeed);
         }
@@ -121,12 +120,13 @@ public class PreyAgent : Agent
     
     public void OnEaten()
     {
-        AddReward(-2f); // TODO configurable   
+        AddReward(eatenPenalty);   
         OnSpawn();
     }
 
     public void Freeze()
     {
+        AddReward(frozenPenalty);   
         gameObject.tag = "frozenPrey";
         m_Frozen = true;
         m_FrozenTime = Time.time;
@@ -215,12 +215,12 @@ public class PreyAgent : Agent
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"Collision with {collision.gameObject.tag}");
+        Debug.Log($"Prey collides with {collision.gameObject.tag}");
         if (collision.gameObject.CompareTag("food"))
         {
             Satiate();
             collision.gameObject.GetComponent<PlantLogic>().OnEaten();
-            AddReward(1f);
+            AddReward(foodReward);
             if (contribute)
             {
                 m_HunterPreySettings.totalScore += 1;
@@ -230,7 +230,7 @@ public class PreyAgent : Agent
         {
             Poison();
             collision.gameObject.GetComponent<PlantLogic>().OnEaten();
-            AddReward(-1f);
+            AddReward(poisonPenalty);
             if (contribute)
             {
                 m_HunterPreySettings.totalScore -= 1;
