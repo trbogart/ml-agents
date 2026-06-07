@@ -15,7 +15,8 @@ public class PreyAgent : Agent
     bool m_Poisoned;
     bool m_Satiated;
     float m_FrozenTime;
-    float m_EffectTime; // poisoned or satiated
+    float m_PoisonedTime;
+    float m_SatiatedTime;
     Rigidbody m_AgentRb;
     // Speed of agent rotation.
     public float turnSpeed = 300;
@@ -26,19 +27,19 @@ public class PreyAgent : Agent
     public Material badMaterial;
     public Material goodMaterial;
     public Material frozenMaterial;
-    public bool contribute;
-    public bool useVectorObs;
+    public bool useVectorObs; // TODO delete
     [Tooltip("Use only the frozen flag in vector observations. If \"Use Vector Obs\" " +
              "is checked, this option has no effect. This option is necessary for the " +
              "VisualHunterPrey scene.")]
-    public bool useVectorFrozenFlag;
+    public bool useVectorFrozenFlag; // TODO delete
     public float foodReward = 1;
     public float poisonPenalty = -1;
     public float frozenPenalty = -1;
     public float eatenPenalty = -2;
     public float existentialPenalty = -0.0001f;
     public float frozenDuration = 10;
-    public float effectDuration = 1;
+    public float satiatedDuration = 1;
+    public float poisonedDuration = 2;
 
     EnvironmentParameters m_ResetParams;
 
@@ -76,20 +77,17 @@ public class PreyAgent : Agent
 
     public void MoveAgent(ActionBuffers actionBuffers)
     {
-        if (Time.time > m_FrozenTime + frozenDuration && m_Frozen)
+        if (m_Frozen && Time.time > m_FrozenTime + frozenDuration)
         {
             Unfreeze();
         }
-        if (Time.time > m_EffectTime + effectDuration)
+        if (m_Poisoned && Time.time > m_PoisonedTime + poisonedDuration)
         {
-            if (m_Poisoned)
-            {
-                Unpoison();
-            }
-            if (m_Satiated)
-            {
-                Unsatiate();
-            }
+            Unpoison();
+        }
+        if (m_Satiated && Time.time > m_SatiatedTime + satiatedDuration)
+        {
+            Unsatiate();
         }
 
         var dirToGo = Vector3.zero;
@@ -142,8 +140,9 @@ public class PreyAgent : Agent
 
     void Poison()
     {
+        AddReward(poisonPenalty);
         m_Poisoned = true;
-        m_EffectTime = Time.time;
+        m_PoisonedTime = Time.time;
         gameObject.GetComponentInChildren<Renderer>().material = badMaterial;
     }
 
@@ -155,8 +154,9 @@ public class PreyAgent : Agent
 
     void Satiate()
     {
+        AddReward(foodReward);
         m_Satiated = true;
-        m_EffectTime = Time.time;
+        m_SatiatedTime = Time.time;
         gameObject.GetComponentInChildren<Renderer>().material = goodMaterial;
     }
 
@@ -220,21 +220,15 @@ public class PreyAgent : Agent
         {
             Satiate();
             collision.gameObject.GetComponent<PlantLogic>().OnEaten();
-            AddReward(foodReward);
-            if (contribute)
-            {
-                m_HunterPreySettings.totalScore += 1;
-            }
         }
-        else if (collision.gameObject.CompareTag("badFood"))
+        if (collision.gameObject.CompareTag("badFood"))
         {
             Poison();
             collision.gameObject.GetComponent<PlantLogic>().OnEaten();
-            AddReward(poisonPenalty);
-            if (contribute)
-            {
-                m_HunterPreySettings.totalScore -= 1;
-            }
+        }
+        if (collision.gameObject.CompareTag("hunter"))
+        {
+            OnEaten();
         }
     }
 

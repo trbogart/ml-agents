@@ -158,7 +158,6 @@ public class HunterAgent : Agent
     {
         if (collision.gameObject.CompareTag("prey") || collision.gameObject.CompareTag("frozenPrey"))
         {
-            collision.gameObject.GetComponent<PreyAgent>().OnEaten();
             AddReward(1f);
             if (contribute)
             {
