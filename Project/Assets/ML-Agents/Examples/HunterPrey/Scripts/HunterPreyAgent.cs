@@ -4,7 +4,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Random = UnityEngine.Random;
 
-public class PreyAgent : Agent
+public class HunterPreyAgent : Agent
 {
     HunterPreySettings m_HunterPreySettings;
     public GameObject area;
@@ -132,7 +132,7 @@ public class PreyAgent : Agent
             {
                 if (hit.collider.gameObject.CompareTag("prey"))
                 {
-                    hit.collider.gameObject.GetComponent<PreyAgent>().Freeze();
+                    hit.collider.gameObject.GetComponent<HunterPreyAgent>().Freeze();
                 }
             }
         }
