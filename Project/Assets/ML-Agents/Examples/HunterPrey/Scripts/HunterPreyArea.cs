@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Unity.MLAgentsExamples;
 
@@ -9,6 +11,14 @@ public class HunterPreyArea : Area
     public int numBadFood;
     public bool respawnFood;
     public float range;
+    public List<HunterAgent> hunters = new List<HunterAgent>();
+    public List<PreyAgent> prey = new List<PreyAgent>();
+
+    void Start()
+    {
+        hunters = GetComponentsInChildren<HunterAgent>().ToList();
+        prey = GetComponentsInChildren<PreyAgent>().ToList();
+    }
 
     void CreateFood(int num, GameObject type)
     {
@@ -41,5 +51,13 @@ public class HunterPreyArea : Area
 
     public override void ResetArea()
     {
+    }
+
+    public void OnPreyCaptured(float groupReward)
+    {
+        foreach (var hunter in hunters)
+        {
+            hunter.AddReward(groupReward);
+        }
     }
 }

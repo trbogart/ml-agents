@@ -191,8 +191,6 @@ public class PreyAgent : Agent
         {
             continuousActionsOut[0] = -1;
         }
-        var discreteActionsOut = actionsOut.DiscreteActions;
-        discreteActionsOut[0] = Input.GetKey(KeyCode.Space) ? 1 : 0;
     }
 
     private void OnSpawn()
@@ -215,7 +213,7 @@ public class PreyAgent : Agent
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"Prey collides with {collision.gameObject.tag}");
+        Debug.Log($"Prey collision with {collision.gameObject.tag}");
         if (collision.gameObject.CompareTag("food"))
         {
             Satiate();
@@ -226,7 +224,8 @@ public class PreyAgent : Agent
             Poison();
             collision.gameObject.GetComponent<PlantLogic>().OnEaten();
         }
-        if (collision.gameObject.CompareTag("hunter"))
+        var hunter = collision.gameObject.GetComponent<HunterAgent>();
+        if (hunter != null)
         {
             OnEaten();
         }

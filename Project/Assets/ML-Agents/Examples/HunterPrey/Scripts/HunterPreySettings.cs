@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.MLAgents;
+using Debug = UnityEngine.Debug;
 
 public class HunterPreySettings : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class HunterPreySettings : MonoBehaviour
         if ((Time.frameCount % 100) == 0)
         {
             m_Recorder.Add("TotalScore", totalScore);
+            Debug.Log($"Total hunger score: {totalScore}");
         }
     }
 }
