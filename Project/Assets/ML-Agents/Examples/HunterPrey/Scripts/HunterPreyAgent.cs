@@ -2,7 +2,9 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
+using System.Diagnostics;
 
 public class HunterPreyAgent : Agent
 {
@@ -33,7 +35,7 @@ public class HunterPreyAgent : Agent
              "is checked, this option has no effect. This option is necessary for the " +
              "VisualHunterPrey scene.")]
     public bool useVectorFrozenFlag;
-    public float existentialPenalty = -0.001f;
+    public float existentialPenalty = -0.0001f;
 
     EnvironmentParameters m_ResetParams;
 
@@ -231,21 +233,23 @@ public class HunterPreyAgent : Agent
 
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log($"Collision with {collision.gameObject.tag}");
         if (collision.gameObject.CompareTag("food"))
         {
             Satiate();
             collision.gameObject.GetComponent<PlantLogic>().OnEaten();
+            Debug.Log("+1 reward");
             AddReward(1f);
             if (contribute)
             {
                 m_HunterPreySettings.totalScore += 1;
             }
         }
-        if (collision.gameObject.CompareTag("badFood"))
+        else if (collision.gameObject.CompareTag("badFood"))
         {
             Poison();
             collision.gameObject.GetComponent<PlantLogic>().OnEaten();
-
+            Debug.Log("-1 penalty");
             AddReward(-1f);
             if (contribute)
             {
