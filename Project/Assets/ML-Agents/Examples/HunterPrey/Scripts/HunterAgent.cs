@@ -28,10 +28,14 @@ public class HunterAgent : Agent
     public GameObject myLaser;
     public bool contribute;
     public bool useVectorObs;
+    public float shootSpeedMultiplier = 0.75f;
     public float existentialPenalty = 0;
     public float indivFoodReward = 1;
     public float groupFoodReward = 1;
+    public float shootPreyReward = 0.1f;
+    public float shootMissPenalty = -0.01f;
     public float captureDuration = 0.5f;
+
 
     EnvironmentParameters m_ResetParams;
 
@@ -88,10 +92,9 @@ public class HunterAgent : Agent
 
         if (discreteActions[0] > 0 && !m_Capturing)
         {
-            // ignore weapon for prey 
             m_Shoot = true;
-            dirToGo *= 0.5f;
-            m_AgentRb.linearVelocity *= 0.75f;
+            dirToGo *= shootSpeedMultiplier;
+            m_AgentRb.linearVelocity *= shootSpeedMultiplier;
         }
         m_AgentRb.AddForce(dirToGo * moveSpeed, ForceMode.VelocityChange);
         transform.Rotate(rotateDir, Time.fixedDeltaTime * turnSpeed);
@@ -110,7 +113,23 @@ public class HunterAgent : Agent
             RaycastHit hit;
             if (Physics.SphereCast(transform.position, 2f, rayDir, out hit, 25f))
             {
-                hit.collider.gameObject.GetComponent<PreyAgent>()?.Freeze();
+                PreyAgent prey = hit.collider.gameObject.GetComponent<PreyAgent>();
+                if (prey != null)
+                {
+                    if (prey.Freeze()) 
+                    {
+                        AddReward(shootPreyReward);
+                    }
+                    // else already frozen, no reward or penalty
+                }
+                else
+                {
+                    AddReward(shootMissPenalty);   
+                }
+            } 
+            else
+            {
+                AddReward(shootMissPenalty);
             }
         }
         else
@@ -121,6 +140,7 @@ public class HunterAgent : Agent
 
     void Capture()
     {
+        Debug.Log("Hunter captured prey!");
         AddReward(indivFoodReward);
         m_MyArea.OnPreyCaptured(groupFoodReward);
         if (contribute)
@@ -130,13 +150,25 @@ public class HunterAgent : Agent
 
         m_Capturing = true;
         m_CaptureTime = Time.time;
-        gameObject.GetComponentInChildren<Renderer>().material = goodMaterial;
+        ChangeColor();
     }
 
     void FinishCapturing()
     {
         m_Capturing = false;
-        gameObject.GetComponentInChildren<Renderer>().material = normalMaterial;
+        ChangeColor();
+    }
+
+    void ChangeColor()
+    {
+        if (m_Capturing)
+        {
+            gameObject.GetComponentInChildren<Renderer>().material = goodMaterial;
+        }
+        else
+        {
+            gameObject.GetComponentInChildren<Renderer>().material = normalMaterial;    
+        }
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -183,7 +215,6 @@ public class HunterAgent : Agent
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"Hunter collision with {collision.gameObject.tag}");
         var prey = collision.gameObject.GetComponent<PreyAgent>();
         if (prey != null)
         {

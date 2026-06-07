@@ -2,7 +2,6 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 using System.Diagnostics;
 
@@ -127,20 +126,46 @@ public class PreyAgent : Agent
         OnSpawn();
     }
 
-    public void Freeze()
+    public bool Freeze()
     {
-        AddReward(frozenPenalty);   
-        gameObject.tag = "frozenPrey";
-        m_Frozen = true;
+        // extend freeze time if already frozen, but only penalized once
         m_FrozenTime = Time.time;
-        gameObject.GetComponentInChildren<Renderer>().material = frozenMaterial;
+        if (!m_Frozen)
+        {
+            m_Frozen = true;
+            AddReward(frozenPenalty);   
+            gameObject.tag = "frozenPrey";
+            ChangeColor();
+            return true;
+        }
+        return false;
+    }
+
+    void ChangeColor()
+    {
+        if (m_Frozen)
+        {
+            gameObject.GetComponentInChildren<Renderer>().material = frozenMaterial;
+        }
+        else if (m_Poisoned)
+        {
+            gameObject.GetComponentInChildren<Renderer>().material = badMaterial;
+        }
+        else if (m_Satiated)
+        {
+            gameObject.GetComponentInChildren<Renderer>().material = goodMaterial;
+        }
+        else
+        {
+            gameObject.GetComponentInChildren<Renderer>().material = normalMaterial;
+        }
     }
 
     void Unfreeze()
     {
         m_Frozen = false;
         gameObject.tag = "prey";
-        gameObject.GetComponentInChildren<Renderer>().material = normalMaterial;
+        ChangeColor();
     }
 
     void Poison()
@@ -148,13 +173,13 @@ public class PreyAgent : Agent
         AddReward(poisonPenalty);
         m_Poisoned = true;
         m_PoisonedTime = Time.time;
-        gameObject.GetComponentInChildren<Renderer>().material = badMaterial;
+        ChangeColor();
     }
 
     void Unpoison()
     {
         m_Poisoned = false;
-        gameObject.GetComponentInChildren<Renderer>().material = normalMaterial;
+        ChangeColor();
     }
 
     void Satiate()
@@ -162,13 +187,13 @@ public class PreyAgent : Agent
         AddReward(foodReward);
         m_Satiated = true;
         m_SatiatedTime = Time.time;
-        gameObject.GetComponentInChildren<Renderer>().material = goodMaterial;
+        ChangeColor();
     }
 
     void Unsatiate()
     {
         m_Satiated = false;
-        gameObject.GetComponentInChildren<Renderer>().material = normalMaterial;
+        ChangeColor();
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -218,7 +243,6 @@ public class PreyAgent : Agent
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"Prey collision with {collision.gameObject.tag}");
         if (collision.gameObject.CompareTag("food"))
         {
             Satiate();
