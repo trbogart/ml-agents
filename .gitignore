@@ -1,4 +1,5 @@
 Temp/
+/config/ppo/results
 
 # Output Artifacts (Legacy)
 /models
