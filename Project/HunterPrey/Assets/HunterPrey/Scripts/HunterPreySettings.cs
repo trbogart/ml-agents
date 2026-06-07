@@ -2,12 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.MLAgents;
 
-public class FoodCollectorSettings : MonoBehaviour
+public class HunterPreySettings : MonoBehaviour
 {
     [HideInInspector]
     public GameObject[] agents;
     [HideInInspector]
-    public FoodCollectorArea[] listArea;
+    public HunterPreyArea[] listArea;
 
     public int totalScore;
     public Text scoreText;
@@ -26,7 +26,7 @@ public class FoodCollectorSettings : MonoBehaviour
         ClearObjects(GameObject.FindGameObjectsWithTag("badFood"));
 
         agents = GameObject.FindGameObjectsWithTag("agent");
-        listArea = FindObjectsByType<FoodCollectorArea>();
+        listArea = FindObjectsByType<HunterPreyArea>();
         foreach (var fa in listArea)
         {
             fa.ResetFoodArea(agents);

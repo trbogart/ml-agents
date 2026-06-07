@@ -3,7 +3,7 @@ using UnityEngine;
 public class FoodLogic : MonoBehaviour
 {
     public bool respawn;
-    public FoodCollectorArea myArea;
+    public HunterPreyArea myArea;
 
     public void OnEaten()
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using Unity.MLAgentsExamples;
 
-public class FoodCollectorArea : Area
+public class HunterPreyArea : Area
 {
     public GameObject food;
     public GameObject badFood;

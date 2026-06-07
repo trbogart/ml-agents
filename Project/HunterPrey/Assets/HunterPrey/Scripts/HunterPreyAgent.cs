@@ -4,11 +4,11 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Random = UnityEngine.Random;
 
-public class FoodCollectorAgent : Agent
+public class HunterPreyAgent : Agent
 {
-    FoodCollectorSettings m_FoodCollecterSettings;
+    HunterPreySettings m_HunterPreySettings;
     public GameObject area;
-    FoodCollectorArea m_MyArea;
+    HunterPreyArea m_MyArea;
     bool m_Frozen;
     bool m_Poisoned;
     bool m_Satiated;
@@ -31,7 +31,7 @@ public class FoodCollectorAgent : Agent
     public bool useVectorObs;
     [Tooltip("Use only the frozen flag in vector observations. If \"Use Vector Obs\" " +
              "is checked, this option has no effect. This option is necessary for the " +
-             "VisualFoodCollector scene.")]
+             "VisualHunterPrey scene.")]
     public bool useVectorFrozenFlag;
 
     EnvironmentParameters m_ResetParams;
@@ -39,8 +39,8 @@ public class FoodCollectorAgent : Agent
     public override void Initialize()
     {
         m_AgentRb = GetComponent<Rigidbody>();
-        m_MyArea = area.GetComponent<FoodCollectorArea>();
-        m_FoodCollecterSettings = FindAnyObjectByType<FoodCollectorSettings>();
+        m_MyArea = area.GetComponent<HunterPreyArea>();
+        m_HunterPreySettings = FindAnyObjectByType<HunterPreySettings>();
         m_ResetParams = Academy.Instance.EnvironmentParameters;
         SetResetParameters();
     }
@@ -132,7 +132,7 @@ public class FoodCollectorAgent : Agent
             {
                 if (hit.collider.gameObject.CompareTag("agent"))
                 {
-                    hit.collider.gameObject.GetComponent<FoodCollectorAgent>().Freeze();
+                    hit.collider.gameObject.GetComponent<HunterPreyAgent>().Freeze();
                 }
             }
         }
@@ -237,7 +237,7 @@ public class FoodCollectorAgent : Agent
             AddReward(1f);
             if (contribute)
             {
-                m_FoodCollecterSettings.totalScore += 1;
+                m_HunterPreySettings.totalScore += 1;
             }
         }
         if (collision.gameObject.CompareTag("badFood"))
@@ -248,7 +248,7 @@ public class FoodCollectorAgent : Agent
             AddReward(-1f);
             if (contribute)
             {
-                m_FoodCollecterSettings.totalScore -= 1;
+                m_HunterPreySettings.totalScore -= 1;
             }
         }
     }
