@@ -233,7 +233,7 @@ public class PreyAgent : Agent
         if (collision.gameObject.CompareTag("food"))
         {
             Satiate();
-            collision.gameObject.GetComponent<FoodLogic>().OnEaten();
+            collision.gameObject.GetComponent<PlantLogic>().OnEaten();
             AddReward(1f);
             if (contribute)
             {
@@ -243,7 +243,7 @@ public class PreyAgent : Agent
         if (collision.gameObject.CompareTag("badFood"))
         {
             Poison();
-            collision.gameObject.GetComponent<FoodLogic>().OnEaten();
+            collision.gameObject.GetComponent<PlantLogic>().OnEaten();
 
             AddReward(-1f);
             if (contribute)
