@@ -14,11 +14,9 @@ public class PreyAgent : Agent
     bool m_Frozen;
     bool m_Poisoned;
     bool m_Satiated;
-    bool m_Shoot;
     float m_FrozenTime;
     float m_EffectTime;
     Rigidbody m_AgentRb;
-    float m_LaserLength;
     // Speed of agent rotation.
     public float turnSpeed = 300;
 
@@ -28,7 +26,6 @@ public class PreyAgent : Agent
     public Material badMaterial;
     public Material goodMaterial;
     public Material frozenMaterial;
-    public GameObject myLaser;
     public bool contribute;
     public bool useVectorObs;
     [Tooltip("Use only the frozen flag in vector observations. If \"Use Vector Obs\" " +
@@ -56,7 +53,6 @@ public class PreyAgent : Agent
             sensor.AddObservation(localVelocity.x);
             sensor.AddObservation(localVelocity.z);
             sensor.AddObservation(m_Frozen);
-            sensor.AddObservation(m_Shoot);
         }
         else if (useVectorFrozenFlag)
         {
@@ -74,8 +70,6 @@ public class PreyAgent : Agent
 
     public void MoveAgent(ActionBuffers actionBuffers)
     {
-        m_Shoot = false;
-
         if (Time.time > m_FrozenTime + 4f && m_Frozen)
         {
             Unfreeze();
@@ -96,7 +90,6 @@ public class PreyAgent : Agent
         var rotateDir = Vector3.zero;
 
         var continuousActions = actionBuffers.ContinuousActions;
-        var discreteActions = actionBuffers.DiscreteActions;
 
         if (!m_Frozen)
         {
@@ -108,13 +101,6 @@ public class PreyAgent : Agent
             dirToGo += transform.right * right;
             rotateDir = -transform.up * rotate;
 
-            if (discreteActions[0] > 0 && gameObject.tag == "hunter")
-            {
-                // ignore weapon for prey 
-                m_Shoot = true;
-                dirToGo *= 0.5f;
-                m_AgentRb.linearVelocity *= 0.75f;
-            }
             m_AgentRb.AddForce(dirToGo * moveSpeed, ForceMode.VelocityChange);
             transform.Rotate(rotateDir, Time.fixedDeltaTime * turnSpeed);
         }
@@ -124,25 +110,6 @@ public class PreyAgent : Agent
             m_AgentRb.linearVelocity *= 0.95f;
         }
 
-        if (m_Shoot)
-        {
-            var myTransform = transform;
-            myLaser.transform.localScale = new Vector3(1f, 1f, m_LaserLength);
-            var rayDir = 25.0f * myTransform.forward;
-            Debug.DrawRay(myTransform.position, rayDir, Color.red, 0f, true);
-            RaycastHit hit;
-            if (Physics.SphereCast(transform.position, 2f, rayDir, out hit, 25f))
-            {
-                if (hit.collider.gameObject.CompareTag("prey"))
-                {
-                    hit.collider.gameObject.GetComponent<PreyAgent>().Freeze();
-                }
-            }
-        }
-        else
-        {
-            myLaser.transform.localScale = new Vector3(0f, 0f, 0f);
-        }
     }
 
     void Freeze()
@@ -220,9 +187,7 @@ public class PreyAgent : Agent
         Unfreeze();
         Unpoison();
         Unsatiate();
-        m_Shoot = false;
         m_AgentRb.linearVelocity = Vector3.zero;
-        myLaser.transform.localScale = new Vector3(0f, 0f, 0f);
         transform.position = new Vector3(Random.Range(-m_MyArea.range, m_MyArea.range),
             2f, Random.Range(-m_MyArea.range, m_MyArea.range))
             + area.transform.position;
@@ -256,11 +221,6 @@ public class PreyAgent : Agent
         }
     }
 
-    public void SetLaserLengths()
-    {
-        m_LaserLength = m_ResetParams.GetWithDefault("laser_length", 1.0f);
-    }
-
     public void SetAgentScale()
     {
         float agentScale = m_ResetParams.GetWithDefault("agent_scale", 1.0f);
@@ -269,7 +229,6 @@ public class PreyAgent : Agent
 
     public void SetResetParameters()
     {
-        SetLaserLengths();
         SetAgentScale();
     }
 }
