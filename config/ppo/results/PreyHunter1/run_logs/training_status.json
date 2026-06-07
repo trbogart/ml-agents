@@ -1,48 +1,4 @@
 {
-    "GridPrey": {
-        "checkpoints": [
-            {
-                "steps": 18576,
-                "file_path": "results\\PreyHunter1\\GridPrey\\GridPrey-18576.onnx",
-                "reward": 0.4944442779653602,
-                "creation_time": 1780876226.522144,
-                "auxillary_file_paths": [
-                    "results\\PreyHunter1\\GridPrey\\GridPrey-18576.pt"
-                ]
-            }
-        ],
-        "final_checkpoint": {
-            "steps": 18576,
-            "file_path": "results\\PreyHunter1\\GridPrey.onnx",
-            "reward": 0.4944442779653602,
-            "creation_time": 1780876226.522144,
-            "auxillary_file_paths": [
-                "results\\PreyHunter1\\GridPrey\\GridPrey-18576.pt"
-            ]
-        }
-    },
-    "GridHunter": {
-        "checkpoints": [
-            {
-                "steps": 6192,
-                "file_path": "results\\PreyHunter1\\GridHunter\\GridHunter-6192.onnx",
-                "reward": -22.168331960837047,
-                "creation_time": 1780876226.601505,
-                "auxillary_file_paths": [
-                    "results\\PreyHunter1\\GridHunter\\GridHunter-6192.pt"
-                ]
-            }
-        ],
-        "final_checkpoint": {
-            "steps": 6192,
-            "file_path": "results\\PreyHunter1\\GridHunter.onnx",
-            "reward": -22.168331960837047,
-            "creation_time": 1780876226.601505,
-            "auxillary_file_paths": [
-                "results\\PreyHunter1\\GridHunter\\GridHunter-6192.pt"
-            ]
-        }
-    },
     "metadata": {
         "stats_format_version": "0.3.0",
         "mlagents_version": "1.1.0",
