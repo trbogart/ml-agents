@@ -4,7 +4,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Random = UnityEngine.Random;
 
-public class HunterPreyAgent : Agent
+public class PreyAgent : Agent
 {
     HunterPreySettings m_HunterPreySettings;
     public GameObject area;
@@ -130,9 +130,9 @@ public class HunterPreyAgent : Agent
             RaycastHit hit;
             if (Physics.SphereCast(transform.position, 2f, rayDir, out hit, 25f))
             {
-                if (hit.collider.gameObject.CompareTag("agent"))
+                if (hit.collider.gameObject.CompareTag("prey"))
                 {
-                    hit.collider.gameObject.GetComponent<HunterPreyAgent>().Freeze();
+                    hit.collider.gameObject.GetComponent<PreyAgent>().Freeze();
                 }
             }
         }
@@ -144,7 +144,7 @@ public class HunterPreyAgent : Agent
 
     void Freeze()
     {
-        gameObject.tag = "frozenAgent";
+        gameObject.tag = "frozenPrey";
         m_Frozen = true;
         m_FrozenTime = Time.time;
         gameObject.GetComponentInChildren<Renderer>().material = frozenMaterial;
@@ -153,7 +153,7 @@ public class HunterPreyAgent : Agent
     void Unfreeze()
     {
         m_Frozen = false;
-        gameObject.tag = "agent";
+        gameObject.tag = "prey";
         gameObject.GetComponentInChildren<Renderer>().material = normalMaterial;
     }
 
