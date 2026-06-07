@@ -33,6 +33,7 @@ public class HunterPreyAgent : Agent
              "is checked, this option has no effect. This option is necessary for the " +
              "VisualHunterPrey scene.")]
     public bool useVectorFrozenFlag;
+    public float existentialPenalty = -0.001f;
 
     EnvironmentParameters m_ResetParams;
 
@@ -105,9 +106,9 @@ public class HunterPreyAgent : Agent
             dirToGo += transform.right * right;
             rotateDir = -transform.up * rotate;
 
-            var shootCommand = discreteActions[0] > 0;
-            if (shootCommand)
+            if (discreteActions[0] > 0 && gameObject.tag == "hunter")
             {
+                // ignore weapon for prey 
                 m_Shoot = true;
                 dirToGo *= 0.5f;
                 m_AgentRb.linearVelocity *= 0.75f;
@@ -184,9 +185,9 @@ public class HunterPreyAgent : Agent
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
-
     {
         MoveAgent(actionBuffers);
+        AddReward(existentialPenalty);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)

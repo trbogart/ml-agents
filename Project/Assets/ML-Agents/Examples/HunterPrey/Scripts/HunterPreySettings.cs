@@ -45,7 +45,10 @@ public class HunterPreySettings : MonoBehaviour
 
     public void Update()
     {
-        scoreText.text = $"Score: {totalScore}";
+        if (scoreText != null)
+        {
+            scoreText.text = $"Score: {totalScore}";
+        }
 
         // Send stats via SideChannel so that they'll appear in TensorBoard.
         // These values get averaged every summary_frequency steps, so we don't
