@@ -238,7 +238,6 @@ public class HunterPreyAgent : Agent
         {
             Satiate();
             collision.gameObject.GetComponent<PlantLogic>().OnEaten();
-            Debug.Log("+1 reward");
             AddReward(1f);
             if (contribute)
             {
@@ -249,7 +248,6 @@ public class HunterPreyAgent : Agent
         {
             Poison();
             collision.gameObject.GetComponent<PlantLogic>().OnEaten();
-            Debug.Log("-1 penalty");
             AddReward(-1f);
             if (contribute)
             {
