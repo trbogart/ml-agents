@@ -1,4 +1,57 @@
 {
+    "GridPrey": {
+        "checkpoints": [
+            {
+                "steps": 499992,
+                "file_path": "results\\PreyHunter1\\GridPrey\\GridPrey-499992.onnx",
+                "reward": 33.36777422846191,
+                "creation_time": 1780879541.2201,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter1\\GridPrey\\GridPrey-499992.pt"
+                ]
+            },
+            {
+                "steps": 877599,
+                "file_path": "results\\PreyHunter1\\GridPrey\\GridPrey-877599.onnx",
+                "reward": null,
+                "creation_time": 1780881530.1571589,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter1\\GridPrey\\GridPrey-877599.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 877599,
+            "file_path": "results\\PreyHunter1\\GridPrey.onnx",
+            "reward": null,
+            "creation_time": 1780881530.1571589,
+            "auxillary_file_paths": [
+                "results\\PreyHunter1\\GridPrey\\GridPrey-877599.pt"
+            ]
+        }
+    },
+    "GridHunter": {
+        "checkpoints": [
+            {
+                "steps": 292533,
+                "file_path": "results\\PreyHunter1\\GridHunter\\GridHunter-292533.onnx",
+                "reward": 16.3936516752777,
+                "creation_time": 1780881530.2538648,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter1\\GridHunter\\GridHunter-292533.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 292533,
+            "file_path": "results\\PreyHunter1\\GridHunter.onnx",
+            "reward": 16.3936516752777,
+            "creation_time": 1780881530.2538648,
+            "auxillary_file_paths": [
+                "results\\PreyHunter1\\GridHunter\\GridHunter-292533.pt"
+            ]
+        }
+    },
     "metadata": {
         "stats_format_version": "0.3.0",
         "mlagents_version": "1.1.0",
