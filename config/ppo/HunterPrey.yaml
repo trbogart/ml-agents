@@ -23,11 +23,11 @@ default_settings:
 
 behaviors:
   GridPrey:
-    max_steps: 6000000 # 3 times as many prey as hunters
+    max_steps: 6000000 # 4 times as many prey as hunters
     summary_freq: 30000
   GridHunter:
-    max_steps: 2000000
-    summary_freq: 10000
+    max_steps: 1500000
+    summary_freq: 7500
     time_horizon: 128 # hunters use longer time horizon and deeper network (fewer to train, more complicated behaviors)
     network_settings:
       num_layers: 3
