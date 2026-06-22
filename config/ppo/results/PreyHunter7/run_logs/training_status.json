@@ -1,0 +1,114 @@
+{
+    "GridPrey": {
+        "checkpoints": [
+            {
+                "steps": 4499968,
+                "file_path": "results\\PreyHunter7\\GridPrey\\GridPrey-4499968.onnx",
+                "reward": 62.06749612739077,
+                "creation_time": 1782096524.598863,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter7\\GridPrey\\GridPrey-4499968.pt"
+                ]
+            },
+            {
+                "steps": 4999960,
+                "file_path": "results\\PreyHunter7\\GridPrey\\GridPrey-4999960.onnx",
+                "reward": 67.80713897092002,
+                "creation_time": 1782099080.1075642,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter7\\GridPrey\\GridPrey-4999960.pt"
+                ]
+            },
+            {
+                "steps": 5499968,
+                "file_path": "results\\PreyHunter7\\GridPrey\\GridPrey-5499968.onnx",
+                "reward": 62.31999567092862,
+                "creation_time": 1782101621.1184173,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter7\\GridPrey\\GridPrey-5499968.pt"
+                ]
+            },
+            {
+                "steps": 5999960,
+                "file_path": "results\\PreyHunter7\\GridPrey\\GridPrey-5999960.onnx",
+                "reward": 58.08713843141283,
+                "creation_time": 1782104161.9471495,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter7\\GridPrey\\GridPrey-5999960.pt"
+                ]
+            },
+            {
+                "steps": 6001024,
+                "file_path": "results\\PreyHunter7\\GridPrey\\GridPrey-6001024.onnx",
+                "reward": 57.69249562174082,
+                "creation_time": 1782104167.1423607,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter7\\GridPrey\\GridPrey-6001024.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 6001024,
+            "file_path": "results\\PreyHunter7\\GridPrey.onnx",
+            "reward": 57.69249562174082,
+            "creation_time": 1782104167.1423607,
+            "auxillary_file_paths": [
+                "results\\PreyHunter7\\GridPrey\\GridPrey-6001024.pt"
+            ]
+        }
+    },
+    "GridHunter": {
+        "checkpoints": [
+            {
+                "steps": 499896,
+                "file_path": "results\\PreyHunter7\\GridHunter\\GridHunter-499896.onnx",
+                "reward": 13.287142913256373,
+                "creation_time": 1782083743.674002,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter7\\GridHunter\\GridHunter-499896.pt"
+                ]
+            },
+            {
+                "steps": 999896,
+                "file_path": "results\\PreyHunter7\\GridHunter\\GridHunter-999896.onnx",
+                "reward": 23.17333318044742,
+                "creation_time": 1782093979.8052318,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter7\\GridHunter\\GridHunter-999896.pt"
+                ]
+            },
+            {
+                "steps": 1499896,
+                "file_path": "results\\PreyHunter7\\GridHunter\\GridHunter-1499896.onnx",
+                "reward": 36.39555558562279,
+                "creation_time": 1782104161.8035274,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter7\\GridHunter\\GridHunter-1499896.pt"
+                ]
+            },
+            {
+                "steps": 1500256,
+                "file_path": "results\\PreyHunter7\\GridHunter\\GridHunter-1500256.onnx",
+                "reward": 35.161000022292136,
+                "creation_time": 1782104167.055437,
+                "auxillary_file_paths": [
+                    "results\\PreyHunter7\\GridHunter\\GridHunter-1500256.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1500256,
+            "file_path": "results\\PreyHunter7\\GridHunter.onnx",
+            "reward": 35.161000022292136,
+            "creation_time": 1782104167.055437,
+            "auxillary_file_paths": [
+                "results\\PreyHunter7\\GridHunter\\GridHunter-1500256.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
