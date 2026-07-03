@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1780795954",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\trbog\\anaconda3\\envs\\mlagents\\Scripts\\mlagents-learn .\\config\\ppo\\HunterPrey.yaml --run-id=PreyOnly1",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.2.2+cu121",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1780795958"
+    },
+    "total": 3.793309499975294,
+    "count": 1,
+    "self": 0.008626900031231344,
+    "children": {
+        "run_training.setup": {
+            "total": 0.09952789999078959,
+            "count": 1,
+            "self": 0.09952789999078959
+        },
+        "TrainerController.start_learning": {
+            "total": 3.685154699953273,
+            "count": 1,
+            "self": 0.0003234000178053975,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 3.6848182999528944,
+                    "count": 1,
+                    "self": 3.6848182999528944
+                },
+                "trainer_threads": {
+                    "total": 3.900029696524143e-06,
+                    "count": 1,
+                    "self": 3.900029696524143e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 9.09995287656784e-06,
+                    "count": 1,
+                    "self": 9.09995287656784e-06
+                }
+            }
+        }
+    }
+}
